@@ -30,7 +30,7 @@ lineaccesstoken = 'cbjZsGav+cggeYzb/Gt42PWFR6e5HKzK0hF9PIJ+xR/yRUEQei+tXOUlRYc+v
 
 line_bot_api = LineBotApi(lineaccesstoken)
 
-# APP CONFIGURATIONS
+# APP CONFIGURATIONS /
 app.config['SECRET_KEY'] = 'opencv'  
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
@@ -154,13 +154,13 @@ def event_handle(event):
             line_bot_api.reply_message(rtoken, replyObj)
         elif (msg == "อย่างสีเหลือง") :
             replyObj = TextSendMessage(text="เยลโล่วว")
-            line_bot_api.reply_message(rtoken, replyObj)
+            line_bot_api.reply_message(rtoken, replyObj) 
         elif (msg == "มะม่วง") :
             replyObj = TextSendMessage(text="แม้งโก้วว")
             line_bot_api.reply_message(rtoken, replyObj)
         else :
             replyObj = TextSendMessage(text=msg)
-        line_bot_api.reply_message(rtoken, replyObj)
+            line_bot_api.reply_message(rtoken, replyObj)
     elif msgType == "image":
         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
