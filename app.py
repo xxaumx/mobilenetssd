@@ -158,9 +158,6 @@ def event_handle(event):
         elif (msg == "มะม่วง") :
             replyObj = TextSendMessage(text="แม้งโก้วว")
             line_bot_api.reply_message(rtoken, replyObj)
-        elif (msg == "มีด") :
-            replyObj = TextSendMessage(text="อีโต้")
-            line_bot_api.reply_message(rtoken, replyObj)
         else :
             replyObj = TextSendMessage(text=msg)
         line_bot_api.reply_message(rtoken, replyObj)
