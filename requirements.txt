@@ -11,5 +11,5 @@ opencv-contrib-python
 opencv-python-headless
 requests
 line-bot-sdk
-Pillow==8.3.2
+Pillow
 pycur1
