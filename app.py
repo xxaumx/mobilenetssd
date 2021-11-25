@@ -156,7 +156,7 @@ def event_handle(event,json_line):
             replyObj = TextSendMessage(text="เยลโล่วว")
             line_bot_api.reply_message(rtoken, replyObj) 
         elif (msg == "มะม่วง") :
-            replyObj = TextSendMessage(text="แม้งโก้วว")
+            replyObj = TextSendMessage(text="แม้งโก้ววว")
             line_bot_api.reply_message(rtoken, replyObj)
         else :
             headers = request.headers
