@@ -165,7 +165,7 @@ def event_handle(event,json_line):
             url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/aebf9147-4679-48f0-a564-b23e28aad016"
             requests.post(url,data=json_line, headers=json_headers)
      elif msgType == "image":
-        try:
+         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
             i = Image.open(BytesIO(message_content.content))
             filename = event['message']['id'] + '.jpg'
