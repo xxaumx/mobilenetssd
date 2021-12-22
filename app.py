@@ -159,7 +159,6 @@ def event_handle(event,json_line):
             line_bot_api.reply_message(rtoken, replyObj)
         else :
             headers = request.headers
-            headers = request.headers
             json_headers = ({k:v for k, v in headers.items()})
             json_headers.update({'Host':'bots.dialogflow.com'})
             url = "https://bots.dialogflow.com/line/aebf9147-4679-48f0-a564-b23e28aad016/webhook"
