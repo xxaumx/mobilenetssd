@@ -148,13 +148,13 @@ def event_handle(event,json_line):
     
     if msgType == "text":
         msg = str(event["message"]["text"])
-        if msg == "สวัสดี":
+        if msg == ("สวัสดี"):
             replyObj = TextSendMessage(text="มาจงมาจ๊ะอะไรมาจุ๊บนี่มาคิมิโนะโต๊ะ")
             line_bot_api.reply_message(rtoken, replyObj)
-        elif msg == "กินข้าวไหม":
+        elif msg == ("กินข้าวไหม"):
             replyObj = TextSendMessage(text="ไม่กินละ อิ่มแล้ว")
             line_bot_api.reply_message(rtoken, replyObj) 
-        elif msg == "มะม่วง":
+        elif msg == ("มะม่วง"):
             replyObj = TextSendMessage(text="แม้งโก้ววว")
             line_bot_api.reply_message(rtoken, replyObj)
         else :
@@ -165,23 +165,23 @@ def event_handle(event,json_line):
             requests.post(url,data=json_line, headers=json_headers)
      elif msgType == "image":
          try:
-            message_content = line_bot_api.get_message_content(event['message']['id'])
-            i = Image.open(BytesIO(message_content.content))
-            filename = event['message']['id'] + '.jpg'
-            i.save(UPLOAD_FOLDER + filename)
-            process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
+             message_content = line_bot_api.get_message_content(event['message']['id'])
+             i = Image.open(BytesIO(message_content.content))
+             filename = event['message']['id'] + '.jpg'
+             i.save(UPLOAD_FOLDER + filename)
+             process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
 
-            url = request.url_root + DOWNLOAD_FOLDER + filename
+             url = request.url_root + DOWNLOAD_FOLDER + filename
             
-            line_bot_api.reply_message(
-                rtoken, [
-                    TextSendMessage(text='Object detection result:'),
-                    ImageSendMessage(url,url)
-                ])    
+             line_bot_api.reply_message(
+                 rtoken, [
+                     TextSendMessage(text='Object detection result:'),
+                     ImageSendMessage(url,url)
+                 ])    
     
-        except:
-            message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
-            line_bot_api.reply_message(event.reply_token, message)
+         except:
+             message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
+             line_bot_api.reply_message(event.reply_token, message)
 
             return 0
 
