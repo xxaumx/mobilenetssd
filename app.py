@@ -191,9 +191,3 @@ def event_handle(event,json_line):
 
 if __name__ == '__main__':
     app.run()
-    
-
-    
-            
-
-            
