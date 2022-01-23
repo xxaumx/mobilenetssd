@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, flash, jsonify
 from werkzeug.utils import secure_filename
-import cv2
+#import cv2
 import numpy as np
 import json
 import requests
@@ -60,7 +60,6 @@ def index():
             }
             return render_template("index.html",data=data)  
     return render_template('index.html')
-
 
 def process_file(path, filename):
     detect_object(path, filename)
@@ -125,7 +124,6 @@ def reply(intent,text,reply_token,id,disname):
     line_bot_api.reply_message(reply_token,text_message)
 
 def event_handle(event,json_line):
-    print(event)
     try: 
         userId = event['source']['userId']
     except:
