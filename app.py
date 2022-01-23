@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, flash, jsonify
 from werkzeug.utils import secure_filename
-#import cv2
+import cv2
 import numpy as np
 import json
 import requests
@@ -26,11 +26,11 @@ UPLOAD_FOLDER ='static/uploads/'
 DOWNLOAD_FOLDER = 'static/downloads/'
 ALLOWED_EXTENSIONS = {'jpg', 'png','.jpeg'}
 
-lineaccesstoken = 'cbjZsGav+cggeYzb/Gt42PWFR6e5HKzK0hF9PIJ+xR/yRUEQei+tXOUlRYc+vyb5Bn7IhUOY4QiCNJelGUioBWCsdNHrGAxztMrdwtu0Fg88W4PikEkFP0/sty85lwGgxqrf6uuSDST2W2W5ye4K2wdB04t89/1O/w1cDnyilFU='
+lineaccesstoken = ''
 
 line_bot_api = LineBotApi(lineaccesstoken)
 
-# APP CONFIGURATIONS /
+# APP CONFIGURATIONS
 app.config['SECRET_KEY'] = 'opencv'  
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
@@ -125,7 +125,8 @@ def reply(intent,text,reply_token,id,disname):
     line_bot_api.reply_message(reply_token,text_message)
 
 def event_handle(event,json_line):
-    try:
+    print(event)
+    try: 
         userId = event['source']['userId']
     except:
         print('error cannot get userId')
@@ -145,43 +146,40 @@ def event_handle(event,json_line):
         replyObj = StickerSendMessage(package_id=str(1),sticker_id=str(sk_id))
         line_bot_api.reply_message(rtoken, replyObj)
         return ''
-    
-    if msgType == "text":
+
+    if msgType == "text":       
         msg = str(event["message"]["text"])
-        if msg == ("สวัสดี"):
-            replyObj = TextSendMessage(text="มาจงมาจ๊ะอะไรมาจุ๊บนี่มาคิมิโนะโต๊ะ")
-            line_bot_api.reply_message(rtoken, replyObj)
-        elif msg == ("กินข้าวไหม"):
-            replyObj = TextSendMessage(text="ไม่กินละ อิ่มแล้ว")
-            line_bot_api.reply_message(rtoken, replyObj) 
-        elif msg == ("มะม่วง"):
-            replyObj = TextSendMessage(text="แม้งโก้ววว")
-            line_bot_api.reply_message(rtoken, replyObj)
-        else :
+        if msg == "สวัสดี":
+            replyObj = TextSendMessage(text="ดีด้วย")
+            line_bot_api.reply_message(rtoken,replyObj)
+        elif msg == "กินข้าวไหม":
+            replyObj = TextSendMessage(text="ไม่ล่ะ กินแล้ว")
+            line_bot_api.reply_message(rtoken,replyObj)
+        else :   
             headers = request.headers
             json_headers = ({k:v for k, v in headers.items()})
             json_headers.update({'Host':'bots.dialogflow.com'})
-            url = "https://bots.dialogflow.com/line/aebf9147-4679-48f0-a564-b23e28aad016/webhook"
+            url = ""
             requests.post(url,data=json_line, headers=json_headers)
-     elif msgType == "image":
-         try:
-             message_content = line_bot_api.get_message_content(event['message']['id'])
-             i = Image.open(BytesIO(message_content.content))
-             filename = event['message']['id'] + '.jpg'
-             i.save(UPLOAD_FOLDER + filename)
-             process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
+    elif msgType == "image":
+        try:
+            message_content = line_bot_api.get_message_content(event['message']['id'])
+            i = Image.open(BytesIO(message_content.content))
+            filename = event['message']['id'] + '.jpg'
+            i.save(UPLOAD_FOLDER + filename)
+            process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
 
-             url = request.url_root + DOWNLOAD_FOLDER + filename
+            url = request.url_root + DOWNLOAD_FOLDER + filename
             
-             line_bot_api.reply_message(
-                 rtoken, [
-                     TextSendMessage(text='Object detection result:'),
-                     ImageSendMessage(url,url)
-                 ])    
+            line_bot_api.reply_message(
+                rtoken, [
+                    TextSendMessage(text='Object detection result:'),
+                    ImageSendMessage(url,url)
+                ])    
     
-         except:
-             message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
-             line_bot_api.reply_message(event.reply_token, message)
+        except:
+            message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
+            line_bot_api.reply_message(event.reply_token, message)
 
             return 0
 
@@ -193,3 +191,9 @@ def event_handle(event,json_line):
 
 if __name__ == '__main__':
     app.run()
+    
+
+    
+            
+
+            
